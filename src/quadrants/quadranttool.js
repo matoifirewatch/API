@@ -52,7 +52,7 @@ console.log('getQuadrantByLocation');
 
 client.connect(err => {
     const collection = client.db("Matoi").collection("quadrants");
-    const result = collection.find({geometry: {$geoIntersects: location}}).toArray(function(err, result) {
+    const result = collection.find({geometry: {$geoIntersects: {$geometry: location}}}).toArray(function(err, result) {
         if (err) throw err;
         console.log(result);
         callback.call(result);
