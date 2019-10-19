@@ -23,11 +23,21 @@ console.log('server is listening on port:' + 2424);
 Server.prototype.addRoutes = function (){
 
     app.post('/user', jsonParser, async function(req, res, next) {
-        let quadrant = quadrantTool.getQuadrantByLocation(req.body.location);//get Quadrant
-        let user = await userUtil.createUser(req.body, quadrant)//createUser
-        let info = user
-        res.status(200).json(user);
-   });
+        try {
+        let quadrant = quadrantTool.getQuadrantByLocation(req.body.location,  function (data){
+            let user =  userUtil.createUser(req.body, data)
+                        res.status(200).json(data);
+        });
+    }
+        catch (e){
+            res.status(500).send(e.message);
+        }
+    });
+   
+      
+       
+   
+
 
 
    app.post('/fire', bodyParser, async function(req, res) {
@@ -52,7 +62,7 @@ else {
 });
 
 
-} 
+}
 
 let server = new Server();
 module.exports = server;

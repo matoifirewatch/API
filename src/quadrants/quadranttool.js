@@ -55,11 +55,10 @@ client.connect(err => {
     const result = collection.find({geometry: {$geoIntersects: {$geometry: location}}}).toArray(function(err, result) {
         if (err) throw err;
         console.log(result);
-        callback.call(result);
-        client.close();;
-    
-
-  
+        client.close();
+        callback(result);
+       
+     
   });
 
 });
