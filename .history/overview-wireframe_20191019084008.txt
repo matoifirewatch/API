@@ -1,0 +1,100 @@
+Enricht dataset with on realtime on the ground info plus satelite data.  NOSQL appraoch, enriching documents
+Find false positives, false negatives/ or corroborate satellite based evidence of fires.
+Public data to understand real extent of fires, causes. Improve ability of citizens to take political action regarding fire prevention.  
+Increase awareness of causes of fires and danger in their area among citizens.
+Increase ownnership/responsibility for forests and inspire public action.  
+
+
+Frontend:
+
+signup
+//location
+//need email or push notification 
+//username
+//contact if wished
+
+
+location
+//nice to have detect current location with reverse geocoding
+
+report fire
+//location  
+//time
+//photo
+//my locaton
+
+
+corroborate fire
+//geolocation
+//was fire true/false
+//photos (with geolocation)
+
+
+
+//need geolocation access
+
+
+mongo db
+
+{
+    id:
+    liveReports:  [],
+    postReports: [],
+    location: 2dspehere,   (as soon as there is modislocation this is location, else reportingLocation1)
+    modisLocation: null,
+    reportLocation: null
+    isCorroborated: true/false,
+    liveCorroboration: true/false, 
+    postCorroboration: true/false,
+    quadrant: 
+
+
+}
+
+
+
+/reportFire
+
+look for fire with location in 2km range.  if found:  identify 
+
+if modislocation, don't set location, else reportLocations avg....
+
+if modisLocation, isCorroborated true
+
+reports array contains details
+
+
+time details.. within 24 hours?  
+
+
+
+//corroborateFire
+firesCollection.find ({
+    location: (latlng/ radius)
+})
+
+
+
+what to do when new data from MODIS comes in?
+
+
+
+
+/reportForestConditionsForSector
+
+{
+
+
+}
+
+saves in a seperate database.   can query data to see forest conditions for a certain fire.
+
+
+
+// how to deal with differrent fire events close to each other (for example arson cases, on the same power line... how close to set the location radius)
+
+
+
+
+
+
