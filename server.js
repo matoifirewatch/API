@@ -1,6 +1,6 @@
 const express = require('express');
 const request = require('request-promise-native');
-const bodyParser = require('bodyParser');
+const bodyParser = require('body-parser');
 const quadrantTool = require('./quadrants/quadranttool.js');
 const userUtil = require('./users/userutil.js');
 
