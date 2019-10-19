@@ -7,7 +7,7 @@ const UserUtil = function () {
 
 };
 
-UserUtil.prototype.createUser = async function (userInfo, quadrant){
+UserUtil.prototype.createUser =  function (userInfo, quadrant){
 
     let userClone = _.cloneDeep(userInfo);
     userClone.quadrantInfo = quadrant;
@@ -16,18 +16,18 @@ UserUtil.prototype.createUser = async function (userInfo, quadrant){
 }
 
 
-UserUtil.prototype.saveUser = async function (userInfo){
+UserUtil.prototype.saveUser =  function (userInfo, callback){
 
     client.connect(err => {
-        const collection = client.db("Matoi").collection("users");
-        const result = collection.insertOne(userInfo, (function(err, result) {
+        let collection = client.db("Matoi").collection("users");
+        collection.insertOne(userInfo, {}, (function(err, result) {
             if (err) throw err;
             console.log(result);
             client.close();
-            callback(result);
+            callback();
            
          
-      });
+      }));
     
     });
 

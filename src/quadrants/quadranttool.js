@@ -50,18 +50,17 @@ QuadrantTool.prototype.getQuadrantByPoint = function (point) {
 QuadrantTool.prototype.getQuadrantByLocation = function (location, callback){
 console.log('getQuadrantByLocation');
 
-client.connect(err => {
+
     const collection = client.db("Matoi").collection("quadrants");
     const result = collection.find({geometry: {$geoIntersects: {$geometry: location}}}).toArray(function(err, result) {
         if (err) throw err;
         console.log(result);
-        client.close();
         callback(result);
        
      
   });
 
-});
+
 
 }
 
