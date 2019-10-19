@@ -9,6 +9,12 @@
             "request": "launch",
             "name": "Launch Quadrants Tool",
             "program": "${workspaceFolder}/src/quadrants/quadranttool.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch",
+            "program": "${workspaceFolder}/start.js"
         }
     ]
 }

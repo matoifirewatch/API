@@ -3,7 +3,7 @@ const grid = require('@turf/square-grid');
 const bboxTurf = require('@turf/bbox');
 const polygon = require('./polygon.json');
 const _ = require('lodash');
-// const db = require ('db.js');
+const db = require ('../db.js');
 const fs = require('fs');
 
 const QuadrantTool = function () {
@@ -46,8 +46,23 @@ QuadrantTool.prototype.getQuadrantByPoint = function (point) {
 
 }
 
+
+QuadrantTool.prototype.getQuadrantByLocation = function (coordinates, callback){
+console.log('getQuadrantByLocation');
+
+db.connect(err => {
+    const collection = client.db("matoi").collection("quadrants");
+    const result = collection.find({});
+
+    // perform actions on the collection object
+    client.close();
+  });
+
+};
+
+
 let quadrantTool = new QuadrantTool();
 
-quadrantTool.init();
+
 
 module.exports = quadrantTool;

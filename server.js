@@ -1,6 +1,8 @@
 const express = require('express');
 const request = require('request-promise-native');
 const bodyParser = require('bodyParser');
+const quadrantTool = require('./quadrants/quadranttool.js');
+const userUtil = require('./users/userutil.js');
 
 const app = require('express');
 
@@ -16,7 +18,7 @@ console.log('server is listening on port:' + 2424);
 Server.addRoutes = function (){
 
     app.post('/user', bodyParser, async function(req, res) {
-        let quradrant = quadrantUtil.getQuadrantByLocation();//get Quadrant
+        let quradrant = quadrantTool.getQuadrantByLocation();//get Quadrant
         let user = await userUtil.createUser(req.body, quadrant)//createUser
         let info = user
         res.status(200).json(user);
