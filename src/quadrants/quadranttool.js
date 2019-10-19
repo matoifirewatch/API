@@ -3,7 +3,7 @@ const grid = require('@turf/square-grid');
 const bboxTurf = require('@turf/bbox');
 const polygon = require('./polygon.json');
 const _ = require('lodash');
-const db = require ('../db.js');
+const client = require ('../db.js');
 const fs = require('fs');
 
 const QuadrantTool = function () {
@@ -47,18 +47,24 @@ QuadrantTool.prototype.getQuadrantByPoint = function (point) {
 }
 
 
-QuadrantTool.prototype.getQuadrantByLocation = function (coordinates, callback){
+QuadrantTool.prototype.getQuadrantByLocation = function (location, callback){
 console.log('getQuadrantByLocation');
 
-db.connect(err => {
-    const collection = client.db("matoi").collection("quadrants");
-    const result = collection.find({});
+client.connect(err => {
+    const collection = client.db("Matoi").collection("quadrants");
+    const result = collection.find({geometry: {$geoIntersects: location}}).toArray(function(err, result) {
+        if (err) throw err;
+        console.log(result);
+        callback.call(result);
+        client.close();;
+    
 
-    // perform actions on the collection object
-    client.close();
+  
   });
 
-};
+});
+
+}
 
 
 let quadrantTool = new QuadrantTool();

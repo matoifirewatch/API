@@ -1,24 +1,29 @@
 const express = require('express');
 const request = require('request-promise-native');
 const bodyParser = require('body-parser');
-const quadrantTool = require('./quadrants/quadranttool.js');
-const userUtil = require('./users/userutil.js');
+const quadrantTool = require('./src/quadrants/quadranttool.js');
+const userUtil = require('./src/users/userutil.js');
+const jsonParser = bodyParser.json();
 
-const app = require('express');
+const app = express();
+
+const Server = function () {
+
+}
 
 Server.prototype.startServer = function () {
 console.log('startServer');
-this.serverHandle = app.listen(2424, function () {
+this.serverHandler = app.listen(2424, function () {
 
 });
 console.log('server is listening on port:' + 2424);
 
 }
 
-Server.addRoutes = function (){
+Server.prototype.addRoutes = function (){
 
-    app.post('/user', bodyParser, async function(req, res) {
-        let quradrant = quadrantTool.getQuadrantByLocation();//get Quadrant
+    app.post('/user', jsonParser, async function(req, res, next) {
+        let quadrant = quadrantTool.getQuadrantByLocation(req.body.location);//get Quadrant
         let user = await userUtil.createUser(req.body, quadrant)//createUser
         let info = user
         res.status(200).json(user);
@@ -49,3 +54,5 @@ else {
 
 } 
 
+let server = new Server();
+module.exports = server;
