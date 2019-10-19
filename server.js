@@ -25,8 +25,11 @@ Server.prototype.addRoutes = function (){
     app.post('/user', jsonParser, async function(req, res, next) {
         try {
         let quadrant = quadrantTool.getQuadrantByLocation(req.body.location,  function (data){
-            let user =  userUtil.createUser(req.body, data)
-                        res.status(200).json(data);
+            let user =  userUtil.createUser(req.body, data);
+            userUtil.saveUser(user, function(){
+                res.status(200).json(data);
+            });
+                        
         });
     }
         catch (e){
