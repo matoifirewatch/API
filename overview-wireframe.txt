@@ -7,6 +7,15 @@ Increase ownnership/responsibility for forests and inspire public action.
 
 Frontend:
 
+
+TODO SUNDAY
+//USER
+add wantsEmailNotifications
+add wantsSMSNotifications
+add emailAddress
+add phoneNumber
+
+
 signup
 //location
 //need email or push notification 
@@ -45,7 +54,7 @@ mongo db
     reportLocation: null
     isCorroborated: true/false,
     confidenceScorce: {
-        
+
     }
     liveCorroboration: true/false, 
     postCorroboration: true/false,

@@ -1,0 +1,29 @@
+//fireConfimation
+{
+    imageFiles: [],
+    timestamp: string,
+    seesFire: true/false,
+    seesSmoke: true/false,
+    seesNoFireEvidence: true/false,
+    seesEvidenceOfRecentFire: true/false,
+    location: geojson point
+    
+}
+
+
+//fireUpload 
+
+{
+imageFiles: [],
+timestamp:
+location: geojson point
+
+}
+
+
+matoiRawFire {
+
+    location: 
+    
+
+}

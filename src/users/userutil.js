@@ -18,22 +18,75 @@ UserUtil.prototype.createUser =  function (userInfo, quadrant){
 }
 
 
-UserUtil.prototype.saveUser =  function (userInfo, callback){
+UserUtil.prototype.createUser = async function (userInfo, quadrant){
 
-    client.connect(err => {
+    let userClone = _.cloneDeep(userInfo);
+    userClone.quadrantInfo = quadrant;
+    return userClone;
+
+}
+
+
+UserUtil.prototype.findUsersByQuadrant =  function (fireQuadrantId){
+
+    
         let collection = client.db("Matoi").collection("users");
-        collection.insertOne(userInfo, {}, (function(err, result) {
+        collection.find({quadrantId: fireQuadrantId}).toArray(function(err, result) {
             if (err) throw err;
             console.log(result);
             client.close();
-            callback();
+            callback(result);
+            
            
+         
+      });
+    };
+
+
+UserUtil.prototype.saveUser = async function (userInfo){
+
+  
+        let collection = client.db("Matoi").collection("users");
+        let result = collection.insertOne(userInfo, (function(err, result) {
+            if (err) throw err;
+            console.log(result);
+            client.close();
+            callback(result);
+         
          
       }));
     
-    });
+   
+
+};
+
+UserUtil.prototype.sendAlert = function (user, alertText) {
+var that = this;
+
+if (user.wantsEmailNotifications) {
+    user.sendEmail(user, text);
+} 
+
+if (user.wantsSMSNotifications){
+    user.sendSMSNotification(user, text);
+}
 
 }
+
+UserUtil.prototype.sendEmail = function (user, text){
+console.log ('sending user email!');
+
+
+};
+
+UserUtil.prototype.sendSMSNotification = function (user, text){
+    console.log ('sending user email!');
+    
+    
+    };
+
+
+
 
 let userUtil = new UserUtil();
 
