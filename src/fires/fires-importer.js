@@ -9,16 +9,20 @@ const ModisImporter = function () {
 
 };
 
-ModisImporter.prototype.convertModisToMatoi = async function (uploadBoady){
+ModisImporter.prototype.convertModisToMatoi = async function (uploadBody, callback){
 
    var that = this;
-   that.findExistingMatoiFire(location, timestamp function (existingFire){
+   firesUtil.findExistingMatoiFire(location, timestamp, function (existingFire){
     if (existingFire){
-       
-        firesUtil.addDataToExistingFire(existingFire, update);
+       let updateType = 'modis';
+        firesUtil.addDataToExistingFire(existingFire, uploadBody, updateType, function () {
+            callback();
+        });
     } 
     else {
-        firesUtil.createNewFire(update, true);
+        firesUtil.createNewFire(uploadBody, updateType, function (){
+            callback();
+        });
     }
    });
 
@@ -26,6 +30,6 @@ ModisImporter.prototype.convertModisToMatoi = async function (uploadBoady){
 
 
 
-let fireUploadUtil = new FireUploadUtil();
+let firesUtil = new firesUtil();
 
-module.exports = fireUploadUtil;
+module.exports = firesUtil;

@@ -3,6 +3,7 @@ const request = require('request-promise-native');
 const bodyParser = require('body-parser');
 const quadrantTool = require('./src/quadrants/quadranttool.js');
 const userUtil = require('./src/users/userutil.js');
+const modisImporter = require('.src/fires/fires-importer.js');
 const jsonParser = bodyParser.json();
 
 const app = express();
@@ -38,7 +39,19 @@ Server.prototype.addRoutes = function (){
     });
    
       
+    app.post('/modisFires', jsonParser, async function(req, res, next) {
+        try {
+       modisImporter.convertModisToMatoi(req.body,  function (){
+            
+           res.status(201).send('fires imported');
+            });
+                        
        
+    }
+        catch (e){
+            res.status(500).send(e.message);
+        }
+    });
    
 
 
