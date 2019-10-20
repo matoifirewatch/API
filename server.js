@@ -3,7 +3,7 @@ const request = require('request-promise-native');
 const bodyParser = require('body-parser');
 const quadrantTool = require('./src/quadrants/quadranttool.js');
 const userUtil = require('./src/users/userutil.js');
-const modisImporter = require('.src/fires/fires-importer.js');
+const modisImporter = require('./src/fires/fires-importer.js');
 const jsonParser = bodyParser.json();
 
 const app = express();

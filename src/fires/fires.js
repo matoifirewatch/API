@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const client = require ('../db.js');
+const uuidv1 = require('uuid/v1')
 
 
 
@@ -35,15 +36,43 @@ FiresUtil.prototype.findExistingMatoiFire = async function (location, timestamp,
 FiresUtil.prototype.createNewFire = async function (body, type, callback){
   var that = this;
   let newFire = null;
-    if (type === 'Modus'){
-        newFire = that.createNewModusFire(body);
+    if (type === 'Modis'){
+        newFire = that.createNewModisFire(body);
     }
     else if (type === 'User'){
         newFire = that.createNewUserFire(body);
     }
 
-    return newFire;
+    that.insertMatoiFire(newFire);
 };
+
+
+FiresUtil.prototype.createNewModisFire = function (body){
+
+    let location = {
+        type: "Point",
+        coordinates: [body.longitude, body.latitude],
+    }
+
+    let matoiFire = {};
+    modusData = body;
+    matoiFire.id = uuid();
+    matoiFire.location = location;
+   
+    matoiFire.date = body.acq_date;
+    matoiFire.time = body.acq_time;
+    matoiFire.liveReports = [];
+    matoiFire.postReports = [];
+    matoiFire.modisLocation = location;
+    matoiFire.reportLocations = [];
+    matoiFire.isCorroborated = false;
+    matoiFire.liveCorroboration = false;
+    matoiFire.postCorroboration = false;
+    //TODO ADD QUADRANT IDE BASED ON LOCATION
+    // matoiFire.quadrantId = quadrantId;
+    return matoiFire;
+
+}
 
 FiresUtil.prototype.insertMatoiFire = function (matoiFire) {
 
