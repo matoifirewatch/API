@@ -10,7 +10,7 @@ const FiresUtil = function () {
 
 };
 
-FiresUtil.prototype.findExistingMatoiFire = async function (location, timestamp, callback){
+FiresUtil.prototype.findExistingMatoiFire = async function (location, callback){
   
     const collection = client.db("Matoi").collection("matoiFires");
     collection.find({
