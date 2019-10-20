@@ -24,7 +24,7 @@ FiresUtil.prototype.findExistingMatoiFire = async function (location, callback){
     }).toArray(function (err, result) {
         if (err) throw err;
         console.log(result);
-        client.close();
+      
         callback(result);
     });
 };
@@ -164,7 +164,7 @@ FiresUtil.prototype.insertMatoiFire = function (matoiFire) {
     collection.insertOne(matoiFire,  (function(err, result) {
         if (err) throw err;
         console.log(result);
-        client.close();
+     
         // callback();
      
      
@@ -179,7 +179,7 @@ FiresUtil.prototype.insertMatoiFire = function (matoiFire) {
     collection.replaceOne({id: fireUpdate.id}, fireUpdate, (function(err, result) {
         if (err) throw err;
         console.log(result);
-        client.close();
+     
         // callback();
      
      

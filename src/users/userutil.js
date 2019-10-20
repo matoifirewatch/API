@@ -34,7 +34,7 @@ UserUtil.prototype.findUsersByQuadrant =  function (fireQuadrantId){
         collection.find({quadrantId: fireQuadrantId}).toArray(function(err, result) {
             if (err) throw err;
             console.log(result);
-            client.close();
+          
             callback(result);
             
            
@@ -50,7 +50,7 @@ UserUtil.prototype.saveUser =  function (userInfo, callback){
         collection.insertOne(userInfo, (function(err, result) {
             if (err) throw err;
             console.log(result);
-            client.close();
+         
             callback(result);
          
          
