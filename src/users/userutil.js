@@ -58,6 +58,31 @@ UserUtil.prototype.saveUser = async function (userInfo){
 
 };
 
+UserUtil.prototype.sendAlert = function (user, alertText) {
+var that = this;
+
+if (user.wantsEmailNotifications) {
+    user.sendEmail(user, text);
+} 
+
+if (user.wantsSMSNotifications){
+    user.sendSMSNotification(user, text);
+}
+
+}
+
+UserUtil.prototype.sendEmail = function (user, text){
+console.log ('sending user email!');
+
+
+};
+
+UserUtil.prototype.sendSMSNotification = function (user, text){
+    console.log ('sending user email!');
+    
+    
+    };
+
 
 
 
