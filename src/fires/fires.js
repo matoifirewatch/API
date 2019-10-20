@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const client = require ('../db.js');
-const uuidv1 = require('uuid/v1')
+const uuid = require('uuid/v1')
+const quadrantsUtil = require('../quadrants/quadranttool.js');
 
 
 
@@ -35,24 +36,31 @@ FiresUtil.prototype.findExistingMatoiFire = async function (location, timestamp,
 
 FiresUtil.prototype.createNewFire = async function (body, type, callback){
   var that = this;
-  let newFire = null;
-    if (type === 'Modis'){
-        newFire = that.createNewModisFire(body);
-    }
-    else if (type === 'User'){
-        newFire = that.createNewUserFire(body);
-    }
+  
 
-    that.insertMatoiFire(newFire);
+
+    if (type === 'modis'){
+    that.createNewModisFire(body, function (fire){
+            that.insertMatoiFire(fire);
+        });
+    }
+    else if (type === 'user'){
+        newFire = that.createNewUserFire(body, function (fire){
+            that.insertMatoiFire(fire);
+        });
+    }
+  
 };
 
 
-FiresUtil.prototype.createNewModisFire = function (body){
+FiresUtil.prototype.createNewModisFire = function (body, callback){
 
     let location = {
         type: "Point",
-        coordinates: [body.longitude, body.latitude],
+        coordinates: [parseFloat(body.longitude), parseFloat(body.latitude)],
     }
+
+    quadrantsUtil.getQuadrantByLocation(location, function (quadrant) { 
 
     let matoiFire = {};
     modusData = body;
@@ -68,9 +76,11 @@ FiresUtil.prototype.createNewModisFire = function (body){
     matoiFire.isCorroborated = false;
     matoiFire.liveCorroboration = false;
     matoiFire.postCorroboration = false;
-    //TODO ADD QUADRANT IDE BASED ON LOCATION
-    // matoiFire.quadrantId = quadrantId;
-    return matoiFire;
+
+    matoiFire.quadrantId = quadrant[0].quadrantId;
+    callback(matoiFire);
+
+    });
 
 }
 
@@ -82,7 +92,7 @@ FiresUtil.prototype.insertMatoiFire = function (matoiFire) {
         if (err) throw err;
         console.log(result);
         client.close();
-        callback();
+        // callback();
      
      
   }));

@@ -26,12 +26,14 @@ ModisImporter.prototype.convertModisToMatoi = async function (modisFires, callba
 //     } 
 //     else {
         firesUtil.createNewFire(body, updateType, function (){
-            callback();
+           
         });
 //     }
 //    });
 
 });
+//TODO AWAIT ALL SUCCESSFUL IMPORTS THEN CALL
+ callback();
 
 };
 
