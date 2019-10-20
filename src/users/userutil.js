@@ -11,6 +11,8 @@ UserUtil.prototype.createUser =  function (userInfo, quadrant){
 
     let userClone = _.cloneDeep(userInfo);
     userClone.quadrantInfo = quadrant;
+    userClone.quadrantId = quadrant.quadrantId;
+    userClone.id = userInfo.username;
     return userClone;
 
 }
