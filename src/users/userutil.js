@@ -18,7 +18,7 @@ UserUtil.prototype.createUser =  function (userInfo, quadrant){
 }
 
 
-UserUtil.prototype.createUser = async function (userInfo, quadrant){
+UserUtil.prototype.createUser =  function (userInfo, quadrant){
 
     let userClone = _.cloneDeep(userInfo);
     userClone.quadrantInfo = quadrant;
@@ -43,11 +43,11 @@ UserUtil.prototype.findUsersByQuadrant =  function (fireQuadrantId){
     };
 
 
-UserUtil.prototype.saveUser = async function (userInfo){
+UserUtil.prototype.saveUser =  function (userInfo, callback){
 
   
         let collection = client.db("Matoi").collection("users");
-        let result = collection.insertOne(userInfo, (function(err, result) {
+        collection.insertOne(userInfo, (function(err, result) {
             if (err) throw err;
             console.log(result);
             client.close();

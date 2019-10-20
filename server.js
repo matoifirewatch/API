@@ -46,8 +46,7 @@ Server.prototype.addRoutes = function (){
            res.status(201).send('fires imported');
             });
                         
-       
-    }
+           }
         catch (e){
             res.status(500).send(e.message);
         }
