@@ -26,13 +26,30 @@ FiresUtil.prototype.findExistingMatoiFire = async function (location, callback){
         console.log(result);
         client.close();
         callback(result);
-
-
     });
+};
 
- 
+
+
+FiresUtil.prototype.addDataToExistingFire = function (existingFire, update, type) {
+
+
+    
+    if (type === 'modis'){
+        that.enrichFireWithNASAData(existingFire, update, function (fire){
+                that.updateMatoiFire(fire);
+            });
+        }
+        else if (type === 'user'){
+            that.enrichFireWithUserData(existingFire, update, function (fire){
+                that.updateMatoiFire(fire);
+            });
+        } 
+
 
 };
+
+
 
 FiresUtil.prototype.createNewFire = async function (body, type, callback){
   var that = this;
@@ -153,8 +170,53 @@ FiresUtil.prototype.insertMatoiFire = function (matoiFire) {
      
   }));
 
+};
+
+  FiresUtil.prototype.updateMatoiFire = function (fireUpdate) {
+
+    var that = this;
+    let collection = client.db("Matoi").collection("matoiFires");
+    collection.updateOne({id: fireUpdate.id}, fireUpdate, (function(err, result) {
+        if (err) throw err;
+        console.log(result);
+        client.close();
+        // callback();
+     
+     
+  }));
+
 
 }
+
+
+FiresUtil.prototype.enrichFireWithUserData = function (existingFire, update, callback) {
+console.log(enrichFireWithUserData);
+
+    let matoiFire = _.cloneDeep(existingFire);
+    if (!body.isConfirmation){
+        matoiFire.liveReports.push(body);
+        matoiFire.liveCorroboration = true;
+    }
+    else  {
+        if (body.seesSmoke || body.seesFire){
+            matoiFire.liveReports.push(body);
+            matoiFire.liveCorroboration = true;
+        }
+        else if (body.seesEvidenceOfRecentFire){
+            matoiFire.postReports.push(body);
+            matoiFire.postCorroboration = true;
+        }
+        else if (body.seesNoFireEvidence) {
+            matoiFire.falsePositiveReports.push(body);
+            matoiFire.liveRejection = true
+        }
+
+    }
+    matoiFire.reportLocations.push(location);
+
+    callback(matoiFire);
+
+};
 
 
 

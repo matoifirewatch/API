@@ -17,19 +17,17 @@ ModisImporter.prototype.convertModisToMatoi = async function (modisFires, callba
    modisFires.forEach(function (body){
 
 
-//    firesUtil.findExistingMatoiFire(location, timestamp, function (existingFire){
-//     if (existingFire){
-//        let updateType = 'modis';
-//         firesUtil.addDataToExistingFire(existingFire, uploadBody, updateType, function () {
-//             callback();
-//         });
-//     } 
-//     else {
+    firesUtil.findExistingMatoiFire(uploadBody.location, function (existingFire){
+        if (existingFire){
+        console.log(exsitingFire);
+            firesUtil.addDataToExistingFire(existingFire, uploadBody, type);
+        } 
+        else {
         firesUtil.createNewFire(body, updateType, function (){
            
         });
-//     }
-//    });
+    }
+    });
 
 });
 //TODO AWAIT ALL SUCCESSFUL IMPORTS THEN CALL
