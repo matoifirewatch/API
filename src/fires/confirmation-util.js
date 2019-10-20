@@ -34,7 +34,7 @@ fires.forEach(function (fire) {
 ConfirmationUtil.prototype.createFireAlert = function (fire) {
 console.log('createFireAlert');
 
-let text = 'Matoi needs your help with a fire in your patch.  Please open the link';
+let text = 'We noticed a fire alert for your forest patch.  Please open the link';
 return text;
 
 };

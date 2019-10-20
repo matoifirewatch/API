@@ -8,7 +8,7 @@ const FireUploadUtil = function () {
 
 };
 
-FireUploadUtil.prototype.uploadUserFire = async function (uploadBody){
+FireUploadUtil.prototype.convertUserFireToMatoi = async function (uploadBody){
 
    var that = this;
    var type = 'user';
@@ -18,7 +18,7 @@ FireUploadUtil.prototype.uploadUserFire = async function (uploadBody){
 //         firesUtil.addDataToExistingFire(existingFire, update);
 //     } 
 //     else {
-        firesUtil.createNewFire(update, type );
+        firesUtil.createNewFire(uploadBody, type );
 //     }
 //    });
 
