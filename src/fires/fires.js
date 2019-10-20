@@ -33,7 +33,7 @@ FiresUtil.prototype.findExistingMatoiFire = async function (location, callback){
 
 FiresUtil.prototype.addDataToExistingFire = function (existingFire, update, type) {
 
-
+var that = this;
     
     if (type === 'modis'){
         that.enrichFireWithNASAData(existingFire, update, function (fire){
@@ -176,7 +176,7 @@ FiresUtil.prototype.insertMatoiFire = function (matoiFire) {
 
     var that = this;
     let collection = client.db("Matoi").collection("matoiFires");
-    collection.updateOne({id: fireUpdate.id}, fireUpdate, (function(err, result) {
+    collection.replaceOne({id: fireUpdate.id}, fireUpdate, (function(err, result) {
         if (err) throw err;
         console.log(result);
         client.close();
@@ -189,9 +189,9 @@ FiresUtil.prototype.insertMatoiFire = function (matoiFire) {
 }
 
 
-FiresUtil.prototype.enrichFireWithUserData = function (existingFire, update, callback) {
-console.log(enrichFireWithUserData);
-
+FiresUtil.prototype.enrichFireWithUserData = function (existingFire, body, callback) {
+console.log('enrichFireWithUserData');
+var that = this;
     let matoiFire = _.cloneDeep(existingFire);
     if (!body.isConfirmation){
         matoiFire.liveReports.push(body);
@@ -212,7 +212,7 @@ console.log(enrichFireWithUserData);
         }
 
     }
-    matoiFire.reportLocations.push(location);
+    matoiFire.reportLocations.push(body.location);
 
     callback(matoiFire);
 

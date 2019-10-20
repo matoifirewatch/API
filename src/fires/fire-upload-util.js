@@ -14,8 +14,8 @@ FireUploadUtil.prototype.convertUserFireToMatoi = async function (uploadBody){
    var type = 'user';
    firesUtil.findExistingMatoiFire(uploadBody.location, function (existingFire){
     if (existingFire){
-    console.log(exsitingFire);
-        firesUtil.addDataToExistingFire(existingFire, uploadBody, type);
+    console.log(existingFire);
+        firesUtil.addDataToExistingFire(existingFire[0], uploadBody, type);
     } 
     else {
         firesUtil.createNewFire(uploadBody, type );

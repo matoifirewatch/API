@@ -18,9 +18,9 @@ ModisImporter.prototype.convertModisToMatoi = async function (modisFires, callba
 
 
     firesUtil.findExistingMatoiFire(uploadBody.location, function (existingFire){
-        if (existingFire){
+        if (existingFire && existingFire[0]){
         console.log(exsitingFire);
-            firesUtil.addDataToExistingFire(existingFire, uploadBody, type);
+            firesUtil.addDataToExistingFire(existingFire[0], uploadBody, type);
         } 
         else {
         firesUtil.createNewFire(body, updateType, function (){
