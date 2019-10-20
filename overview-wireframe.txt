@@ -8,12 +8,7 @@ Increase ownnership/responsibility for forests and inspire public action.
 Frontend:
 
 
-TODO SUNDAY
-//USER
-add wantsEmailNotifications
-add wantsSMSNotifications
-add emailAddress
-add phoneNumber
+
 
 
 signup

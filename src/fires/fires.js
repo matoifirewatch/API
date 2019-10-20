@@ -63,19 +63,21 @@ FiresUtil.prototype.createNewModisFire = function (body, callback){
     quadrantsUtil.getQuadrantByLocation(location, function (quadrant) { 
 
     let matoiFire = {};
-    modusData = body;
+    matoiFire.NASAData = body;
     matoiFire.id = uuid();
     matoiFire.location = location;
-   
-    matoiFire.date = body.acq_date;
+   matoiFire.date = body.acq_date;
     matoiFire.time = body.acq_time;
     matoiFire.liveReports = [];
     matoiFire.postReports = [];
+    matoiFire.falsePositiveReports = [];
     matoiFire.modisLocation = location;
     matoiFire.reportLocations = [];
     matoiFire.isCorroborated = false;
     matoiFire.liveCorroboration = false;
     matoiFire.postCorroboration = false;
+    matoiFire.liveRejection = false;
+
 
     matoiFire.quadrantId = quadrant[0].quadrantId;
     callback(matoiFire);
@@ -83,6 +85,60 @@ FiresUtil.prototype.createNewModisFire = function (body, callback){
     });
 
 }
+
+
+FiresUtil.prototype.createNewUserFire = function (body, callback){
+
+    let location = body.location;
+    quadrantsUtil.getQuadrantByLocation(location, function (quadrant) { 
+
+    let matoiFire = {};
+    matoiFire.NASAData = null;
+    matoiFire.id = uuid();
+    matoiFire.location = location;
+    matoiFire.date = body.date;
+    matoiFire.time = body.time;
+    matoiFire.liveReports = [];
+    matoiFire.postReports = [];
+    matoiFire.falsePositiveReports = [];
+    matoiFire.modisLocation = null;
+    matoiFire.reportLocations = [];
+    matoiFire.isCorroborated = false;
+    matoiFire.liveCorroboration = false;
+    matoiFire.postCorroboration = false;
+    matoiFire.liveRejection = false;
+
+    matoiFire.quadrantId = quadrant[0].quadrantId;
+
+
+    if (!body.isConfirmation){
+        matoiFire.liveReports.push(body);
+        matoiFire.liveCorroboration = true;
+    }
+    else  {
+        if (body.seesSmoke || body.seesFire){
+            matoiFire.liveReports.push(body);
+            matoiFire.liveCorroboration = true;
+        }
+        else if (body.seesEvidenceOfRecentFire){
+            matoiFire.postReports.push(body);
+            matoiFire.postCorroboration = true;
+        }
+        else if (body.seesNoFireEvidence) {
+            matoiFire.falsePositiveReports.push(body);
+            matoiFire.liveRejection = true
+        }
+
+    }
+    matoiFire.reportLocations.push(location);
+ 
+
+    callback(matoiFire);
+
+    });
+
+}
+
 
 FiresUtil.prototype.insertMatoiFire = function (matoiFire) {
 

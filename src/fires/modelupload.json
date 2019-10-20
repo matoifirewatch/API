@@ -1,0 +1,6 @@
+{"imageFiles": ["fire1.txt", "smoke1.txt"],
+    "location": {
+        "type": "Point",
+        "coordinates": [-120.151, 38.696]
+    }
+}

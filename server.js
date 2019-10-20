@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const quadrantTool = require('./src/quadrants/quadranttool.js');
 const userUtil = require('./src/users/userutil.js');
 const modisImporter = require('./src/fires/fires-importer.js');
+const userFireImporter = require('./src/fires/fire-upload-util.js')
 const jsonParser = bodyParser.json();
 
 const app = express();
@@ -55,29 +56,26 @@ Server.prototype.addRoutes = function (){
 
 
 
-   app.post('/fire', bodyParser, async function(req, res) {
-       try {
-    let isValidFire = await fireUtil.isExistingFire(req.body); 
-    if (isValidFire){
-    let exsitingFire = await fireUtil.getExistingFire(req.body);//get Quadrant
-    if (existingFire){
-
-    }
-    //created
-    res.status(201);
-}
-
-else {
-    //bad request
-    res.status(400)
-}
-       } catch (e){
-           request.status(500).send('Internal Server Error');
-       }
+   app.post('/userFire', jsonParser, async function(req, res) {
+    try {
+        userFireImporter.convertUserFireToMatoi(req.body,  function (){
+             
+            res.status(201).send('user fire imported');
+             });
+                         
+            }
+         catch (e){
+             res.status(500).send(e.message);
+         }
 });
 
+};
 
-}
+
+
+
+
+
 
 let server = new Server();
 module.exports = server;
